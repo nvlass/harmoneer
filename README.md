@@ -1,6 +1,6 @@
 # Harmoneer
 
-Four-part harmony exercises in the browser, following the first year of harmony in Μπάμπης Κανάς's *Αρμονία*: primary degrees, inversions, VI and II, cadences, III and VII. No backend; it installs as a PWA and works offline.
+Four-part harmony exercises in the browser, following the first year of a conservatory harmony course: primary degrees, inversions, VI and II, cadences, III and VII. No backend; it installs as a PWA and works offline.
 
 Sibling of [Chord Trainer](https://github.com/nvlass/chordtrainer), [Counterpointer](https://github.com/nvlass/counterpointer) and [Dicteeineer](https://github.com/nvlass/dicteeineer), at [music-trainer.app](https://music-trainer.app).
 
@@ -28,4 +28,8 @@ npx shadow-cljs compile test   # tests on node
 npm run dist                   # release build into dist/
 ```
 
-Piano samples: FluidR3_GM (CC BY 3.0).
+Piano samples: FluidR3_GM acoustic grand (via [gleitz/midi-js-soundfonts](https://github.com/gleitz/midi-js-soundfonts), CC BY 3.0).
+
+## License
+
+MIT, see [LICENSE](LICENSE). The piano samples are CC BY 3.0 (see above).
