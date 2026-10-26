@@ -332,3 +332,6 @@ ul.rule-list li { padding: 7px 0; border-top: 1px solid var(--line); }
 ul.rule-list li div { font-size: .88rem; color: var(--ink-3); }
 ul.rule-list li div.fix { color: var(--ink-2); }
 .rule-group { margin-top: 12px; }
+
+.crash pre.crash-msg { white-space: pre-wrap; font-size: .8rem; color: var(--ink-3); background: var(--surface-2); border-radius: 8px; padding: 8px 10px; }
+.crash .actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }

@@ -6,6 +6,7 @@
             [harmoneer.events]
             [harmoneer.subs]
             [harmoneer.views :as views]
+            [harmoneer.guard :as guard]
             [harmoneer.audio :as audio]
             [harmoneer.storage :as storage]))
 
@@ -15,7 +16,7 @@
   (rf/clear-subscription-cache!)
   (when-not @root
     (reset! root (rdc/create-root (js/document.getElementById "app"))))
-  (rdc/render @root [views/app]))
+  (rdc/render @root [guard/guard [views/app]]))
 
 (def captured #{"ArrowUp" "ArrowDown" "ArrowLeft" "ArrowRight" " " "Tab" "Backspace"})
 
