@@ -5,6 +5,7 @@
             [harmoneer.harmony :as h]
             [harmoneer.rules :as rules]
             [harmoneer.score :as score]
+            [harmoneer.cheatsheet :as cheat]
             [harmoneer.events :as events]
             [harmoneer.i18n :as i18n :refer [tr tr-msg]]))
 
@@ -147,7 +148,9 @@
     [:div.v-msg (tr-msg msg)]
     [:div.v-meta (tr :ui/cols cols) " · " (tr (keyword "rule" (name rule)))]
     (when (= i focus)
-      [:div.v-fix (tr (keyword "rule.desc" (name rule)))])]
+      [:<>
+       [:div.v-fix (tr (keyword "rule.desc" (name rule)))]
+       [:div.v-fix [:b (tr :ui/try)] (tr (keyword "fix" (name rule)))]])]
    [:button.link {:title (tr :ui/mute-title)
                   :on-click (fn [e] (.stopPropagation e) (>evt [:settings/toggle-rule rule]))} (tr :ui/mute)]])
 
@@ -202,12 +205,12 @@
        ^{:key g}
        [:div.card
         [:h3 (tr (keyword "group" (name g)))]
-        (for [{:keys [id level]} (filter #(= g (:group %)) rules/rules)]
+        (for [{:keys [id] :as r} (filter #(= g (:group %)) rules/rules)]
           ^{:key id}
           [:label.toggle.rule
            [:input {:type "checkbox" :checked (contains? enabled id)
                     :on-change #(>evt [:settings/toggle-rule id])}]
-           [:span [:span {:class (str "tag " (name level))}] " " (tr (keyword "rule" (name id)))
+           [:span [cheat/rule-tags r] " " (tr (keyword "rule" (name id)))
             [:small (tr (keyword "rule.desc" (name id)))]]])])
      [:div.card
       [:h3 (tr :ui/settings)]
@@ -238,9 +241,10 @@
        [:div.lang {:title (tr :ui/language)}
         [seg [[:en "EN"] [:el "ΕΛ"]] (:lang s) (setter :lang)]]]]
      [:nav
-      (for [v [:write :rules]]
+      (for [v [:write :cheat :rules]]
         ^{:key v}
         [:button {:class (when (= v view) "on") :on-click #(>evt [:set-view v])} (tr (keyword "nav" (name v)))])]
      (case view
        :rules [rules-view]
+       :cheat [cheat/view]
        [write-view])]))

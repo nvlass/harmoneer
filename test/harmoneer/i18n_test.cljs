@@ -18,7 +18,7 @@
 
 (deftest every-rule-has-text
   (doseq [lang [:en :el] {:keys [id]} rules/rules
-          k [(keyword "rule" (name id)) (keyword "rule.desc" (name id))]]
+          k [(keyword "rule" (name id)) (keyword "rule.desc" (name id)) (keyword "fix" (name id))]]
     (is (string? (i18n/t {:lang lang :names t/letters} k)) (str lang k))))
 
 (deftest violations-render

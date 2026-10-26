@@ -299,6 +299,36 @@ ul.violations li.warning .dot { background: var(--warn); }
 /* ---------------------------------------------------------------- rules */
 
 .toggle.rule { border-top: 1px solid var(--line); }
-.tag { display: inline-block; width: 9px; height: 9px; border-radius: 50%; vertical-align: 1px; background: var(--ink-3); }
-.tag.error { background: var(--bad); }
-.tag.warning { background: var(--warn); }
+
+
+
+.ltag { font-size: .66rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; border-radius: 4px; padding: 1px 5px; vertical-align: 2px; background: var(--surface-2); color: var(--ink-3); }
+.ltag.error { background: var(--bad-soft); color: var(--bad); }
+.ltag.warning { background: var(--warn-soft); color: var(--warn); }
+.ltag.preset { margin-left: 6px; font-weight: 500; text-transform: none; letter-spacing: 0; }
+
+/* ---------------------------------------------------------------- cheat sheet */
+
+nav { grid-template-columns: repeat(3, 1fr); }
+.cheat p, .cheat dd, .cheat li { color: var(--ink-2); }
+.cheat ul, .cheat ol { padding-left: 20px; margin: 0 0 8px; }
+.cheat li { margin: 5px 0; }
+.examples { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; margin: 10px 0 4px; }
+figure.example { margin: 0; background: var(--surface-2); border-radius: 10px; padding: 6px 8px 10px; overflow-x: auto; }
+figure.example svg.score { margin: 0 auto; }
+figure.example figcaption { font-size: .85rem; color: var(--ink-2); }
+ul.ex-faults { list-style: none; padding: 0; margin: 4px 0 0; }
+ul.ex-faults li { font-size: .8rem; margin: 2px 0; }
+ul.ex-faults li.error { color: var(--bad); }
+ul.ex-faults li.warning { color: var(--warn); }
+table.degrees { width: 100%; border-collapse: collapse; font-size: .9rem; }
+table.degrees th { text-align: left; font-weight: 500; color: var(--ink-3); font-size: .75rem; padding: 0 6px 6px; }
+table.degrees td { padding: 5px 6px; border-top: 1px solid var(--line); color: var(--ink-2); }
+table.degrees td b { color: var(--ink); font-family: Georgia, serif; }
+table.degrees small { color: var(--ink-3); }
+.num { font-variant-numeric: tabular-nums; }
+ul.rule-list { list-style: none; padding: 0; margin: 0 0 12px; }
+ul.rule-list li { padding: 7px 0; border-top: 1px solid var(--line); }
+ul.rule-list li div { font-size: .88rem; color: var(--ink-3); }
+ul.rule-list li div.fix { color: var(--ink-2); }
+.rule-group { margin-top: 12px; }

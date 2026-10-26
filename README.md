@@ -15,6 +15,8 @@ Every rule only reports, never blocks. Strict and Relaxed presets (as in Counter
 
 Input: click the staff, type note letters (the cursor moves down the voices, then to the next chord), arrows and `#` `-` `n` to adjust, or play whole chords on a MIDI keyboard.
 
+A **Cheat sheet** covers the first-year theory (voices, chords of the key, doubling, connecting chords, forbidden motion, the leading tone, inversions and figures, 6/4 chords, cadences, harmonizing a melody) with examples checked by the same rules, and lists every rule with its fix.
+
 English and Greek.
 
 ## Development

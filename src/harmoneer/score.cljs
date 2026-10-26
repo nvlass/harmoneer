@@ -147,7 +147,7 @@
   [_]
   (let [hover (r/atom nil)]
     (fn [{:keys [keysig cols n-cols from n-bars first? sel marks focus playing given figures numerals
-                 on-pick zoom solution?]}]
+                 on-pick zoom solution? compact]}]
       (let [key keysig
             w (system-width key first? n-bars)
             x-start (x0 key first?)
@@ -186,7 +186,8 @@
          [staff-el :bass key first? w]
          [:line {:x1 2 :x2 2 :y1 treble-y :y2 (+ bass-y 40)}]
          (for [b (range 1 (inc n-bars))
-               :let [x (+ x-start (* b 2 col-w)) final? (and (= b n-bars) (>= (+ from (* 2 n-bars)) n-cols))]]
+               :let [x (+ x-start (* b 2 col-w)) final? (and (= b n-bars) (>= (+ from (* 2 n-bars)) n-cols))]
+               :when (or final? (not compact))]
            ^{:key b}
            [:g {:class (if final? "bar final" "bar")}
             [:line {:x1 x :x2 x :y1 treble-y :y2 (+ bass-y 40)}]])
@@ -195,7 +196,7 @@
                c [(* 2 b) (inc (* 2 b))]
                :when (and (< c to) (get cols c))]
            ^{:key (str "c" c)}
-           [:g (column-notes key cols c (cx c) accs cls (= c (dec n-cols)))])
+           [:g (column-notes key cols c (cx c) accs cls (or compact (= c (dec n-cols))))])
          (for [c (range from to)
                :let [fs (get figures c)]
                :when (seq fs)]
@@ -222,4 +223,5 @@
     [:div.systems
      (for [b (range 0 n-bars per-line)]
        ^{:key b}
-       [system (assoc props :from (* 2 b) :n-bars (min per-line (- n-bars b)) :first? (zero? b))])]))
+       [system (assoc props :from (* 2 b) :n-bars (min per-line (- n-bars b))
+                      :first? (and (zero? b) (not (:compact props))))])]))

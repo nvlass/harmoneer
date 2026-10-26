@@ -48,7 +48,7 @@
     :voice-abbr (fn [_ v] ({:s "S" :a "A" :t "T" :b "B"} v))
     :signature (fn [_ s] (cond (zero? s) "no sharps or flats" (pos? s) (str s " ♯") :else (str (- s) " ♭")))}
 
-   :nav {:write "Exercise" :rules "Rules"}
+   :nav {:write "Exercise" :cheat "Cheat sheet" :rules "Rules"}
 
    :level
    {:1 "Primary degrees" :2 "Inversions" :3 "VI and II" :4 "Cadences" :5 "III and VII"
@@ -76,7 +76,7 @@
     :range (fn [_ v high?] (str "The " (voice v) " is too " (if high? "high" "low") "."))
     :parallel (fn [_ u l p] (str "Parallel " (perfects p) " between " (voice u) " and " (voice l) "."))
     :antiparallel (fn [_ u l p] (str (str/capitalize (perfects p)) " by contrary motion between " (voice u) " and " (voice l) "."))
-    :hidden (fn [_ p] (str "Hidden " (if (zero? p) "octave" "fifth") ": the outer voices reach it in similar motion."))
+    :hidden (fn [_ p] (str "Hidden " (if (zero? p) "octave" "fifth") ": the outer voices reach it in similar motion, the soprano by leap."))
     :overlap (fn [_ u l] (str "The " (voice u) " and " (voice l) " overlap: one passes the other's previous note."))
     :common-tone "The common tone isn't kept in the same voice."
     :contrary "No common tone: the upper voices should move against the bass."
@@ -104,7 +104,7 @@
     :parallel "Parallel fifths and octaves"
     :antiparallel "Contrary fifths and octaves"
     :hidden "Hidden fifths and octaves"
-    :hidden-leap "Hidden fifths and octaves by leap"
+    :hidden-octave "Hidden octaves"
     :overlap "Overlapping voices"
     :common-tone "Common tones"
     :contrary "Contrary motion to the bass"
@@ -128,8 +128,8 @@
      :range "Soprano C4–G5, alto G3–D5, tenor C3–G4, bass E2–C4."
      :parallel "No two voices move in parallel fifths, octaves or unisons."
      :antiparallel "No fifths or octaves by contrary motion either."
-     :hidden "The outer voices don't reach a fifth or octave in similar motion."
-     :hidden-leap "The outer voices reach a fifth or octave in similar motion only with the soprano moving by step."
+     :hidden "The outer voices reach a fifth or octave in similar motion only with the soprano moving by step (as in V–I with 2→1 in the soprano)."
+     :hidden-octave "The outer voices reach an octave in similar motion only with the soprano moving by step; hidden fifths are fine."
      :overlap "No voice moves past the note the voice next to it just had."
      :common-tone "Between root-position chords, a common tone stays in the same voice and the others move to the nearest notes."
      :contrary "Between root-position chords with no common tone (IV–V, V–VI), the upper voices move against the bass."
@@ -140,6 +140,114 @@
      :six-four "A 6/4 is cadential (I6/4 → V on a strong beat), passing (bass by step in one direction) or pedal (bass held, same chord around it)."
      :progression "With a given melody: V and VII don't go to IV or II."
      :harmonic-rhythm "With a given melody: don't repeat a chord from a weak beat to the next downbeat."}}
+
+   :fix
+   {:chord "Use only the notes of the chord; check the accidentals the figures ask for (♯ under the bass means a raised third)."
+    :vocab "Look for a chord of the level that contains the melody note."
+    :complete "Move a doubled note to the missing root or third."
+    :fifth "Replace one of the doubled notes with the fifth."
+    :double-lt "Keep the leading tone in one voice; double the root instead."
+    :doubling "Change the doubled note to the root (or, in a first inversion, to the fifth)."
+    :doubling-third "Double the root or the fifth instead of the third."
+    :crossing "Swap the two notes, or move one of them by an octave."
+    :spacing "Bring the upper voices closer: move the lower one up or the upper one down by an octave."
+    :range "Move the note by an octave, or pick another chord tone."
+    :parallel "Move one of the two voices the other way, or give it another chord tone."
+    :antiparallel "Keep the interval from repeating: change one voice to another chord tone."
+    :hidden "Let the soprano move by step, or move the bass in contrary motion."
+    :hidden-octave "Let the soprano move by step, or move the bass in contrary motion."
+    :overlap "Move the voice to a note on its own side of its neighbour's previous note."
+    :common-tone "Keep the shared note in the same voice and move the others to the nearest notes."
+    :contrary "Move soprano, alto and tenor down when the bass goes up (and the other way round)."
+    :leading-tone "Move the leading tone up a half step to the tonic."
+    :leading-tone-outer "Move the leading tone in the soprano up a half step to the tonic."
+    :melodic "Choose another chord tone nearer the previous note; in minor, avoid the step 6→7 (augmented 2nd)."
+    :inner-leap "Keep the common tone or move the inner voice to the nearest chord tone."
+    :six-four "Use the 6/4 on a downbeat before V (cadential), between two positions of one chord with the bass stepping (passing), or over a held bass (pedal)."
+    :progression "Go from IV or II to V, not the other way round."
+    :harmonic-rhythm "Change the chord on the downbeat, or repeat it within the bar instead."}
+
+   :cheat
+   {:voices-title "Four voices"
+    :voices [:<>
+             [:p "Soprano and alto share the treble staff (stems up, down), tenor and bass the bass staff. Ranges: soprano C4–G5, alto G3–D5, tenor C3–G4, bass E2–C4."]
+             [:p "Between soprano and alto, and between alto and tenor, at most an octave; the bass may be further from the tenor. In " [:b "close position"] " the three upper voices fit in an octave; in " [:b "open position"] " there is room for another chord tone between them."]]
+    :ex-close "I in close position."
+    :ex-open "I in open position."
+    :degrees-title "The chords of the key"
+    :degrees [:p "A triad on each degree, with the notes of the scale. In minor the chords come from the " [:b "harmonic"] " minor scale, with the raised seventh: V is major, VII diminished, III augmented. The roman numeral names the degree of the root."]
+    :th-major "C major" :th-minor "A minor" :th-function "Function"
+    :q-major "major" :q-minor "minor" :q-dim "diminished" :q-aug "augmented" :q-other ""
+    :fn-t "tonic" :fn-s "subdominant" :fn-d "dominant"
+    :doubling-title "Doubling"
+    :doubling [:<>
+               [:p "Four voices, three notes: one note is doubled."]
+               [:ul
+                [:li [:b "Root position"] ": double the root. Exceptions: VI after V doubles the third, and so do II° and VII°."]
+                [:li [:b "First inversion"] ": in I6, IV6 and V6 double the root or fifth, not the bass; in II6 the bass (third) is the best doubling."]
+                [:li [:b "Second inversion"] " (6/4): double the bass."]
+                [:li "Never double the " [:b "leading tone"] "."]]]
+    :ex-double-root "Root doubled in every chord: I IV V I."
+    :ex-double-third "The third of a major chord doubled."
+    :connect-title "Connecting chords"
+    :connect [:<>
+              [:p [:b "Common tone"] ": when two chords share a note, keep it in the same voice and move the other upper voices to the nearest notes (I–IV, I–V, I–VI)."]
+              [:p [:b "No common tone"] ": when the roots are a step apart (IV–V, V–VI) the upper voices move against the bass, to avoid parallels."]
+              [:p "V–VI is the exception: the leading tone rises to the tonic with the bass, the other two voices fall, and VI ends up with a doubled third."]]
+    :ex-common-tone "I–IV–I: C stays in the tenor."
+    :ex-no-common "IV–V–I: the bass rises, the upper voices fall."
+    :ex-deceptive "V–VI: the leading tone rises, VI has a doubled third."
+    :forbidden-title "Forbidden motion"
+    :forbidden [:<>
+                [:p [:b "Parallel fifths and octaves"] ": two voices a fifth (or an octave, or a unison) apart both move to the next fifth (octave) in the same direction. They are errors between any two voices."]
+                [:p [:b "Antiparallels"] ": the same, by contrary motion (a fifth to a twelfth, an octave to a unison)."]
+                [:p [:b "Hidden fifths and octaves"] ": the outer voices reach a fifth or octave in similar motion. Fine with the soprano moving by step (V–I with 2→1), faulty with a leap."]
+                [:p "Voices also shouldn't " [:b "cross"] " (alto above soprano) or " [:b "overlap"] " (a voice moving past the note its neighbour just had)."]]
+    :ex-parallels "All voices rising with the bass: parallel fifths and octaves."
+    :ex-hidden "A hidden octave: the soprano leaps to G with the bass."
+    :leading-title "The leading tone"
+    :leading [:<>
+              [:p "The seventh degree, a half step below the tonic. When V (or VII) goes to I or VI it rises to the tonic. In minor it needs an accidental (G♯ in A minor), written in every chord that has it, and in figures as ♯ under the bass."]
+              [:p "Relaxed rules let an inner leading tone fall to the fifth of I, to complete the chord; strict rules don't."]]
+    :ex-minor "A minor: I–V–I with G♯."
+    :ex-leading-tone "The leading tone falls in the tenor, and I ends up with a doubled fifth."
+    :inversions-title "Inversions and figures"
+    :inversions [:<>
+                 [:p "The bass decides the position: root in the bass is " [:b "root position"] " (5/3, usually written as nothing), the third in the bass is the " [:b "first inversion"] " (6), the fifth is the " [:b "second inversion"] " (6/4). The figures are intervals above the bass."]
+                 [:p "An accidental in the figures changes that note: ♯ alone means a raised third (V in minor), ♯6 a raised sixth."]]
+    :ex-inversions "I, I6, I6/4. The 6/4 on its own is unstable: it needs one of the uses below."
+    :six-four-title "The 6/4 chord"
+    :six-four [:ul
+               [:li [:b "Cadential"] ": I6/4 on a downbeat before V, over the same bass (the στηριγμένη τέλεια πτώση). The sixth and fourth fall to the fifth and third."]
+               [:li [:b "Passing"] ": between two positions of one chord, the bass passing by step (I – V6/4 – I6)."]
+               [:li [:b "Pedal"] ": over a held bass, between the same chord (I – IV6/4 – I)."]]
+    :ex-cadential "I–IV–I6/4–V–I: the cadential 6/4 on the downbeat."
+    :ex-passing "I–V6/4–I6: the bass passes C–D–E."
+    :ex-pedal "I–IV6/4–I over a held C."
+    :cadences-title "Cadences"
+    :cadences [:ul
+               [:li [:b "Perfect"] " (τέλεια): V–I, both in root position, the tonic in the soprano for the strongest ending. With the cadential 6/4 it is the στηριγμένη τέλεια πτώση."]
+               [:li [:b "Plagal"] " (πλάγια, ecclesiastical): IV–I."]
+               [:li [:b "Half"] " (ημίπτωση): ending on V."]
+               [:li [:b "Deceptive"] " (απατηλή): V–VI instead of V–I."]]
+    :ex-perfect "IV–V–I."
+    :ex-plagal "IV–I."
+    :ex-half "I–V."
+    :melody-title "Harmonizing a melody"
+    :melody [:ol.steps
+             [:li "Start from the cadence: the last two chords (V–I, or I6/4–V–I) and the bass under them."]
+             [:li "For each melody note, list the chords of the level that contain it."]
+             [:li "Choose so the harmony moves forward (I → IV or II → V → I), changes on downbeats, and doesn't go back from V to IV or II."]
+             [:li "Write the bass: mostly contrary motion to the melody, a few inversions to make it move by step."]
+             [:li "Fill in alto and tenor with common tones and steps, checking doubling and parallels."]]
+    :rules-title "Rules checked"
+    :rules-hint [:p.hint "Errors are the rules every textbook agrees on; warnings are style points. Click a violation in the exercise to see its fix."]
+    :level-error "error" :level-warning "warning"
+    :strict-only "strict" :relaxed-only "relaxed" :melody-only "melody exercises"
+    :about-title "About the score"
+    :about (fn [_ e w]
+             [:<>
+              [:p "Each broken rule adds a penalty (" e " for an error, " w " for a warning). Zero means nothing the rules know about is wrong, not that it is the only or the most beautiful answer: compare with the solution, and listen to both."]])}
 
    :group {:chord "Chords" :motion "Connecting chords" :melody "Voice leading" :progression "Progression"}
    :preset {:strict "Strict" :relaxed "Relaxed" :custom "Custom"}
@@ -186,7 +294,7 @@
     :try "Try: "
     :keys-hint "Keys: C–B write a note in the selected voice and move to the next one · ↑↓ step (Shift: octave) · # - n accidentals · ←→ chords · Tab voice · ⌫ delete · Space play. With a MIDI keyboard, play the whole chord at once."
     :rule-set "Rule set"
-    :rule-set-hint "Strict keeps the textbook rules of the first year. Relaxed allows what most teachers accept: moving the common tone, hidden fifths with the soprano by step, an inner leading tone falling to the fifth."
+    :rule-set-hint "Strict keeps the textbook rules of the first year. Relaxed allows what most teachers accept: moving the common tone, hidden fifths, an inner leading tone falling to the fifth."
     :settings "Settings"
     :note-names "Note names"
     :hear "Hear while writing"

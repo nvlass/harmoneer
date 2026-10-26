@@ -22,7 +22,7 @@
    {:id :parallel :group :motion :level :error :presets #{:strict :relaxed}}
    {:id :antiparallel :group :motion :level :warning :presets #{:strict :relaxed}}
    {:id :hidden :group :motion :level :warning :presets #{:strict}}
-   {:id :hidden-leap :group :motion :level :warning :presets #{:relaxed}}
+   {:id :hidden-octave :group :motion :level :warning :presets #{:relaxed}}
    {:id :overlap :group :motion :level :warning :presets #{:strict :relaxed}}
    {:id :common-tone :group :motion :level :warning :presets #{:strict}}
    {:id :contrary :group :motion :level :warning :presets #{:strict}}
@@ -161,19 +161,21 @@
   (for [[u l p] (perfect-motions x y #(not= (pos? %1) (pos? %2)))]
     {:cols [(:i x) (:i y)] :voices [u l] :msg [:v/antiparallel u l p]}))
 
-(defn- hidden [x y soprano-leap?]
+(defn- hidden
+  "Outer voices reaching a fifth or octave (one of `kinds`, as :g7) in similar motion, the soprano leaping."
+  [x y kinds]
   (let [a (:col x) b (:col y)]
     (when (every? some? [(a :s) (a :b) (b :s) (b :b)])
       (let [p2 (perfect (b :b) (b :s))
             ms (move a b :s) mb (move a b :b)]
-        (when (and p2 (not= p2 (perfect (a :b) (a :s)))
+        (when (and p2 (kinds p2) (not= p2 (perfect (a :b) (a :s)))
                    (not (zero? ms)) (not (zero? mb)) (= (pos? ms) (pos? mb))
-                   (or (not soprano-leap?) (> (:g (t/interval (a :s) (b :s))) 1)))
+                   (> (:g (t/interval (a :s) (b :s))) 1))
           [{:cols [(:i x) (:i y)] :voices [:s :b] :msg [:v/hidden p2]}])))))
 
-(defmethod check-pair :hidden [_ _ x y] (hidden x y false))
+(defmethod check-pair :hidden [_ _ x y] (hidden x y #{0 4}))
 
-(defmethod check-pair :hidden-leap [_ _ x y] (hidden x y true))
+(defmethod check-pair :hidden-octave [_ _ x y] (hidden x y #{0}))
 
 (defmethod check-pair :overlap [_ _ x y]
   (let [a (:col x) b (:col y)]
